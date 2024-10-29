@@ -5,10 +5,10 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "properties": {}
   },
-  "description": "This module exposes actions to request HTTP resources",
-  "name": "HTTP",
+  "description": "A sample integration brought to you by Sekoia.io",
+  "name": "Sekoia.io's sample integration",
   "uuid": "037f57f3-f481-4f40-8ac2-f4a279c2eae3",
-  "slug": "http",
+  "slug": "sekoia-sample-integration",
   "version": "1.119.1",
   "categories": [
     "Generic"
