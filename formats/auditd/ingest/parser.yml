@@ -78,8 +78,18 @@ stages:
           linux.audit.user.session.id: '{{kv_parse.message.ses}}'
           linux.audit.user.audit.id: '{{kv_parse.message.auid}}'
           linux.audit.process.selinux.context: '{{kv_parse.message.subj}}'
+          linux.audit.data.item: '{{kv_parse.message.item}}'
+          linux.audit.file.rdev: '{{kv_parse.message.rdev}}'
+          linux.audit.data.nametype: '{{kv_parse.message.nametype}}'
+          file.path: '{{kv_parse.message.name}}'
+          file.inode: '{{kv_parse.message.inode}}'
+          file.device: '{{kv_parse.message.dev}}'
+          file.mode: '{{kv_parse.message.mode}}'
+          file.owner: '{{kv_parse.message.ouid}}'
+          file.group: '{{kv_parse.message.ogid}}'
         filter: ''
         name: set
+
   normalize_msg_fields:
     actions:
       - set:
@@ -105,6 +115,7 @@ stages:
       - set:
           network.direction: "inbound"
         filter: '{{ kv_parse_msg.message.direction == "to-client" }}'
+
       - set:
           network.direction: "outbound"
         filter: '{{ kv_parse_msg.message.direction == "from-client" }}'

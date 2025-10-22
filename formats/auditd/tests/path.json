@@ -1,0 +1,53 @@
+{
+  "input": {
+    "sekoiaio": {
+      "intake": {
+        "dialect": "Auditd",
+        "dialect_uuid": "7e7b1eb3-5740-4829-b076-58286b169060"
+      }
+    },
+    "message": "node=dctwebvlp135.gemalto.com type=PATH msg=audit(1756987201.487:21467425): item=0 name=\"./default/\" inode=393249 dev=fd:02 mode=040750 ouid=0 ogid=1810 rdev=00:00 obj=unconfined_u:object_r:user_tmp_t:s0 nametype=PARENT"
+  },
+  "expected": {
+    "message": "node=dctwebvlp135.gemalto.com type=PATH msg=audit(1756987201.487:21467425): item=0 name=\"./default/\" inode=393249 dev=fd:02 mode=040750 ouid=0 ogid=1810 rdev=00:00 obj=unconfined_u:object_r:user_tmp_t:s0 nametype=PARENT",
+    "event": {
+      "dataset": "linux.auditd",
+      "kind": "event",
+      "module": "auditd",
+      "sequence": 21467425,
+      "type": "path"
+    },
+    "file": {
+      "device": "fd:02",
+      "directory": "./default",
+      "group": "1810",
+      "inode": "393249",
+      "mode": "040750",
+      "name": "",
+      "owner": "0",
+      "path": "./default/"
+    },
+    "host": {
+      "name": "dctwebvlp135.gemalto.com",
+      "os": {
+        "type": "linux"
+      }
+    },
+    "linux": {
+      "audit": {
+        "data": {
+          "item": 0,
+          "nametype": "PARENT"
+        },
+        "file": {
+          "rdev": "00:00"
+        }
+      }
+    },
+    "related": {
+      "user": [
+        "0"
+      ]
+    }
+  }
+}

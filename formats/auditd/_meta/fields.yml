@@ -8,7 +8,22 @@ linux.audit.user.audit.id:
   name: linux.audit.user.audit.id
   type: number
 
+linux.audit.data.item:
+  description: "Index de l'élément PATH"
+  name: linux.audit.data.item
+  type: number
+
 linux.audit.process.selinux.context:
   description: "Contexte SELinux"
   name: linux.audit.process.selinux.context
+  type: text
+
+linux.audit.data.nametype:
+  description: "Name type"
+  name: linux.audit.data.nametype
+  type: text
+
+linux.audit.file.rdev:
+  description: "Special device id"
+  name: linux.audit.file.rdev
   type: text
