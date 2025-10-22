@@ -20,6 +20,7 @@
       "sequence": 3169942,
       "type": "crypto_session"
     },
+    "@timestamp": "2025-09-04T13:06:01.990000Z",
     "action": {
       "outcome": "success"
     },

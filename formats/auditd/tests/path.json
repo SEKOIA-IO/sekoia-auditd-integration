@@ -17,6 +17,7 @@
       "sequence": 21467425,
       "type": "path"
     },
+    "@timestamp": "2025-09-04T12:00:01.487000Z",
     "file": {
       "device": "fd:02",
       "directory": "./default",

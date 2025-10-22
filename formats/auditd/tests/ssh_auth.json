@@ -21,6 +21,7 @@
       "sequence": 4091908,
       "type": "cred_acq"
     },
+    "@timestamp": "2025-09-04T12:15:04.739000Z",
     "action": {
       "outcome": "success"
     },
