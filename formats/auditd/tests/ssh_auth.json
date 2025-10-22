@@ -13,7 +13,6 @@
     "event": {
       "action": "PAM:setcred",
       "dataset": "linux.auditd",
-      "id": "00000000-0000-0000-0000-000000000000",
       "kind": "event",
       "module": "auditd",
       "outcome": "success",
@@ -39,6 +38,9 @@
           }
         },
         "user": {
+          "audit": {
+            "id": 4294967295
+          },
           "session": {
             "id": 4294967295
           }

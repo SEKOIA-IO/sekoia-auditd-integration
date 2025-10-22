@@ -1,0 +1,99 @@
+{
+  "input": {
+    "sekoiaio": {
+      "intake": {
+        "dialect": "Auditd",
+        "dialect_uuid": "7e7b1eb3-5740-4829-b076-58286b169060"
+      }
+    },
+    "message": "node=dctwebvlp115.gemalto.com type=CRYPTO_SESSION msg=audit(1756991161.990:3169942): pid=171026 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=start direction=from-client cipher=aes256-ctr ksize=256 mac=hmac-sha2-256 pfs=curve25519-sha256 spid=171033 suid=74 rport=56296 laddr=10.9.174.71 lport=13459  exe=\"/usr/sbin/sshd\" hostname=? addr=10.51.199.131 terminal=? res=success'"
+  },
+  "expected": {
+    "message": "node=dctwebvlp115.gemalto.com type=CRYPTO_SESSION msg=audit(1756991161.990:3169942): pid=171026 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=start direction=from-client cipher=aes256-ctr ksize=256 mac=hmac-sha2-256 pfs=curve25519-sha256 spid=171033 suid=74 rport=56296 laddr=10.9.174.71 lport=13459  exe=\"/usr/sbin/sshd\" hostname=? addr=10.51.199.131 terminal=? res=success'",
+    "event": {
+      "action": "start",
+      "dataset": "linux.auditd",
+      "kind": "event",
+      "module": "auditd",
+      "outcome": "success",
+      "reason": "171026",
+      "sequence": 3169942,
+      "type": "crypto_session"
+    },
+    "action": {
+      "outcome": "success"
+    },
+    "destination": {
+      "address": "10.9.174.71",
+      "ip": "10.9.174.71",
+      "port": 13459
+    },
+    "host": {
+      "name": "dctwebvlp115.gemalto.com",
+      "os": {
+        "type": "linux"
+      }
+    },
+    "linux": {
+      "audit": {
+        "process": {
+          "selinux": {
+            "context": "system_u:system_r:sshd_t:s0-s0:c0.c1023"
+          }
+        },
+        "user": {
+          "audit": {
+            "id": 4294967295
+          },
+          "session": {
+            "id": 4294967295
+          }
+        }
+      }
+    },
+    "network": {
+      "direction": "outbound"
+    },
+    "process": {
+      "executable": "/usr/sbin/sshd",
+      "parent": {
+        "pid": 171033
+      },
+      "pid": 171026
+    },
+    "related": {
+      "hosts": [
+        "?"
+      ],
+      "ip": [
+        "10.51.199.131",
+        "10.9.174.71"
+      ]
+    },
+    "service": {
+      "name": "?"
+    },
+    "source": {
+      "address": "?",
+      "domain": "?",
+      "ip": "10.51.199.131",
+      "port": 56296
+    },
+    "tls": {
+      "cipher": "aes256-ctr",
+      "client": {
+        "x509": {
+          "public_key_size": 256,
+          "signature_algorithm": "hmac-sha2-256"
+        }
+      },
+      "curve": "curve25519-sha256"
+    },
+    "user": {
+      "effective": {
+        "id": "4294967295"
+      },
+      "id": "0"
+    }
+  }
+}

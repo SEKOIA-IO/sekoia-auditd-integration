@@ -12,6 +12,17 @@ pipeline:
         pattern: >-
           node=%{DATA:node}\s+type=%{WORD:audit_type}\s+msg=audit\(%{NUMBER:audit_time}.%{NUMBER:audit_id}\):\s+%{GREEDYDATA:audit_kv}
         custom_patterns: {}
+  - name: data
+    description: ''
+    filter: ''
+    external:
+      name: date.parse
+      properties:
+        input_field: >-
+          {{ (grok_audit.message.audit_time | float * 1000) | int | to_iso8601 }}
+        output_field: '@timestamp'
+        format: ''
+        timezone: UTC
   - name: normalize_fields_1
     description: ''
     filter: ''
@@ -63,8 +74,9 @@ stages:
           user.id: '{{kv_parse.message.uid}}'
           process.pid: '{{kv_parse.message.pid}}'
           event.reason: '{{kv_parse.message.pid}}'
-          user.effective.id: '{{kv_parse.message.auid}}'
+          user.effective.id: '{{kv_parse.message.auid or kv_parse_msg.message.suid}}'
           linux.audit.user.session.id: '{{kv_parse.message.ses}}'
+          linux.audit.user.audit.id: '{{kv_parse.message.auid}}'
           linux.audit.process.selinux.context: '{{kv_parse.message.subj}}'
         filter: ''
         name: set
@@ -79,5 +91,20 @@ stages:
           source.ip: '{{kv_parse_msg.message.addr}}'
           service.name: '{{kv_parse_msg.message.terminal}}'
           action.outcome: '{{kv_parse_msg.message.res}}'
+          tls.cipher: '{{kv_parse_msg.message.cipher}}'
+          tls.curve: '{{kv_parse_msg.message.pfs}}'
+          tls.client.x509.public_key_size: '{{kv_parse_msg.message.ksize}}'
+          tls.client.x509.signature_algorithm: '{{kv_parse_msg.message.mac}}'
+          process.parent.pid: '{{kv_parse_msg.message.spid}}'
+          source.port: '{{kv_parse_msg.message.rport}}'
+          destination.port: '{{kv_parse_msg.message.lport}}'
+          destination.ip: '{{kv_parse_msg.message.laddr}}'
         filter: ''
         name: set
+
+      - set:
+          network.direction: "inbound"
+        filter: '{{ kv_parse_msg.message.direction == "to-client" }}'
+      - set:
+          network.direction: "outbound"
+        filter: '{{ kv_parse_msg.message.direction == "from-client" }}'

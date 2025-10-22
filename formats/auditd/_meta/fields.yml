@@ -3,6 +3,11 @@ linux.audit.user.session.id:
   name: linux.audit.user.session.id
   type: number
 
+linux.audit.user.audit.id:
+  description: "Audit user ID"
+  name: linux.audit.user.audit.id
+  type: number
+
 linux.audit.process.selinux.context:
   description: "Contexte SELinux"
   name: linux.audit.process.selinux.context
