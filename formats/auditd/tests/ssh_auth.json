@@ -1,0 +1,82 @@
+{
+  "input": {
+    "sekoiaio": {
+      "intake": {
+        "dialect": "Auditd",
+        "dialect_uuid": "7e7b1eb3-5740-4829-b076-58286b169060"
+      }
+    },
+    "message": "node=dctappvlp210.gemalto.com type=CRED_ACQ msg=audit(1756988104.739:4091908): pid=228411 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=PAM:setcred grantors=pam_env,pam_localuser,pam_unix acct=\"GEMALTO\\dctsftptransfer\" exe=\"/usr/sbin/sshd\" hostname=dct02per.gemalto.com addr=10.51.196.67 terminal=ssh res=success'"
+  },
+  "expected": {
+    "message": "node=dctappvlp210.gemalto.com type=CRED_ACQ msg=audit(1756988104.739:4091908): pid=228411 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=PAM:setcred grantors=pam_env,pam_localuser,pam_unix acct=\"GEMALTO\\dctsftptransfer\" exe=\"/usr/sbin/sshd\" hostname=dct02per.gemalto.com addr=10.51.196.67 terminal=ssh res=success'",
+    "event": {
+      "action": "PAM:setcred",
+      "dataset": "linux.auditd",
+      "id": "00000000-0000-0000-0000-000000000000",
+      "kind": "event",
+      "module": "auditd",
+      "outcome": "success",
+      "provider": "pam_env,pam_localuser,pam_unix",
+      "reason": "228411",
+      "sequence": 4091908,
+      "type": "cred_acq"
+    },
+    "action": {
+      "outcome": "success"
+    },
+    "host": {
+      "name": "dctappvlp210.gemalto.com",
+      "os": {
+        "type": "linux"
+      }
+    },
+    "linux": {
+      "audit": {
+        "process": {
+          "selinux": {
+            "context": "system_u:system_r:sshd_t:s0-s0:c0.c1023"
+          }
+        },
+        "user": {
+          "session": {
+            "id": 4294967295
+          }
+        }
+      }
+    },
+    "process": {
+      "executable": "/usr/sbin/sshd",
+      "pid": 228411
+    },
+    "related": {
+      "hosts": [
+        "dct02per.gemalto.com"
+      ],
+      "ip": [
+        "10.51.196.67"
+      ],
+      "user": [
+        "GEMALTO\\dctsftptransfer"
+      ]
+    },
+    "service": {
+      "name": "ssh"
+    },
+    "source": {
+      "address": "dct02per.gemalto.com",
+      "domain": "dct02per.gemalto.com",
+      "ip": "10.51.196.67",
+      "registered_domain": "gemalto.com",
+      "subdomain": "dct02per",
+      "top_level_domain": "com"
+    },
+    "user": {
+      "effective": {
+        "id": "4294967295"
+      },
+      "id": "0",
+      "name": "GEMALTO\\dctsftptransfer"
+    }
+  }
+}

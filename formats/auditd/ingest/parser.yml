@@ -1,0 +1,83 @@
+name: linux-auditd
+ignored_values: null
+pipeline:
+  - name: grok_audit
+    description: ''
+    filter: ''
+    external:
+      name: grok.match
+      properties:
+        input_field: original.message
+        output_field: message
+        pattern: >-
+          node=%{DATA:node}\s+type=%{WORD:audit_type}\s+msg=audit\(%{NUMBER:audit_time}.%{NUMBER:audit_id}\):\s+%{GREEDYDATA:audit_kv}
+        custom_patterns: {}
+  - name: normalize_fields_1
+    description: ''
+    filter: ''
+    external: null
+  - name: kv_parse
+    description: ''
+    filter: ''
+    external:
+      name: kv.parse-kv
+      properties:
+        input_field: grok_audit.message.audit_kv
+        output_field: message
+        value_sep: '='
+        item_sep: \s
+  - name: normalize_fields
+    description: ''
+    filter: ''
+    external: null
+  - name: kv_parse_msg
+    description: ''
+    filter: ''
+    external:
+      name: kv.parse-kv
+      properties:
+        input_field: '{{kv_parse.message.msg}}'
+        output_field: message
+        value_sep: '='
+        item_sep: \s
+  - name: normalize_msg_fields
+    description: ''
+    filter: ''
+    external: null
+stages:
+  normalize_fields_1:
+    actions:
+      - set:
+          event.module: auditd
+          event.dataset: linux.auditd
+          event.kind: event
+          host.name: '{{grok_audit.message.node}}'
+          event.type: '{{grok_audit.message.audit_type | lower}}'
+          event.sequence: '{{grok_audit.message.audit_id | int}}'
+          host.os.type: linux
+        filter: ''
+        name: set
+  normalize_fields:
+    actions:
+      - set:
+          user.id: '{{kv_parse.message.uid}}'
+          process.pid: '{{kv_parse.message.pid}}'
+          event.reason: '{{kv_parse.message.pid}}'
+          user.effective.id: '{{kv_parse.message.auid}}'
+          linux.audit.user.session.id: '{{kv_parse.message.ses}}'
+          linux.audit.process.selinux.context: '{{kv_parse.message.subj}}'
+        filter: ''
+        name: set
+  normalize_msg_fields:
+    actions:
+      - set:
+          event.action: '{{kv_parse_msg.message.op}}'
+          event.provider: '{{kv_parse_msg.message.grantors}}'
+          user.name: '{{kv_parse_msg.message.acct}}'
+          process.executable: '{{kv_parse_msg.message.exe}}'
+          source.domain: '{{kv_parse_msg.message.hostname}}'
+          source.ip: '{{kv_parse_msg.message.addr}}'
+          service.name: '{{kv_parse_msg.message.terminal}}'
+          action.outcome: '{{kv_parse_msg.message.res}}'
+        filter: ''
+        name: set

@@ -1,0 +1,9 @@
+linux.audit.user.session.id:
+  description: "Session ID"
+  name: linux.audit.user.session.id
+  type: number
+
+linux.audit.process.selinux.context:
+  description: "Contexte SELinux"
+  name: linux.audit.process.selinux.context
+  type: text

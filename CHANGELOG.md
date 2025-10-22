@@ -1,43 +1,8 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
 ## Unreleased
 
-## 1.2.1 -  2024-11-05
-
-### Fixed
-
-- Minor fix in intake format
-
-## 1.2.0 -  2024-10-30
-
-### Added
-
-- Add new intake format
-
-## 1.1.0 -  2024-07-26
-
-### Changed
-
-- Add additional user-agent to work with api
-
-## 1.0.0 - 2024-05-05
-
-### Changed
-
-- GA release
-
-## 0.2.0 - 2024-01-05
-
-### Changed
-
-- Support 204 response with application/json header
-
-## 0.1.0 - 2023-11-22
+## 0.0.1 - 2025-110-22
 
 ### Changed
 
