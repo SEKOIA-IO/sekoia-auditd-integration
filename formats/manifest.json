@@ -1,0 +1,16 @@
+{
+  "configuration": {
+    "type": "object",
+    "title": "Module configuration",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {}
+  },
+  "description": "An intake to parse Linux Auditd logs",
+  "name": "Auditd",
+  "uuid": "7e7b1eb3-5740-4829-b076-58286b169060",
+  "slug": "sekoia-auditd-integration",
+  "version": "0.0.2",
+  "categories": [
+    "Process monitoring"
+  ]
+}
