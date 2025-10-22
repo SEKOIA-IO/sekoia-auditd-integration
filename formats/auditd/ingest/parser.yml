@@ -10,7 +10,7 @@ pipeline:
         input_field: original.message
         output_field: message
         pattern: >-
-          node=%{DATA:node}\s+type=%{WORD:audit_type}\s+msg=audit\(%{NUMBER:audit_time}.%{NUMBER:audit_id}\):\s+%{GREEDYDATA:audit_kv}
+          node=%{DATA:node}\s+type=%{WORD:audit_type}\s+msg=audit\(%{NUMBER:audit_time}\:%{NUMBER:audit_id}\):\s+%{GREEDYDATA:audit_kv}
         custom_patterns: {}
   - name: data
     description: ''
