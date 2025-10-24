@@ -9,7 +9,7 @@
   "name": "Auditd Root",
   "uuid": "7e7b1eb3-5740-4829-b076-58286b169060",
   "slug": "sekoia-auditd-integration",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "categories": [
     "authentication",
     "network",
