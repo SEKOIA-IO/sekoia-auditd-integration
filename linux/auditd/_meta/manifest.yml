@@ -1,11 +1,9 @@
 uuid: 1cdcdfeb-decc-4c3b-b969-b867c03118c7
 name: Auditd
 slug: sekoiaio-auditd-format
-description: >-
-  Auditd (audit daemon) is Linux's built-in auditing framework that tracks and logs system calls, file access, network activity, and user actions to provide a comprehensive audit trail for security and compliance purposes.
+description: "Auditd (audit daemon) is Linux's built-in auditing framework that tracks and logs system calls, file access, network activity, and user actions to provide a comprehensive audit trail for security and compliance purposes."
 data_sources:
   - System calls
-  - Process command-line parameters
   - Process monitoring
   - Process use of network
   - File monitoring
