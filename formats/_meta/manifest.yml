@@ -1,6 +1,6 @@
-uuid: 7e7b1eb3-5740-4829-b076-58286b169060
-name: Auditd
-slug: auditd
+uuid: 331d180b-7dd3-4007-b3bb-52078d2cefaf
+name: Linux Auditd
+slug: linux-auditd
 description: >-
   Auditd (audit daemon) is Linux's built-in auditing framework that tracks and logs system calls, file access, network activity, and user actions to provide a comprehensive audit trail for security and compliance purposes.
 data_sources:
