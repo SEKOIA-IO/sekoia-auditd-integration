@@ -4,6 +4,10 @@ slug: sekoiaio-auditd-format
 description: >-
   Auditd (audit daemon) is Linux's built-in auditing framework that tracks and logs system calls, file access, network activity, and user actions to provide a comprehensive audit trail for security and compliance purposes.
 data_sources:
-  Process command-line parameters: Windows Security Auditing logs provide information about process creation
-  Process monitoring: Windows Security Auditing logs are process tracking events
-  Process use of network: Windows Filtering Platform collects information on processes having network activities
+  - System calls
+  - Process command-line parameters
+  - Process monitoring
+  - Process use of network
+  - File monitoring
+  - Authentication logs
+  - Network protocol analysis

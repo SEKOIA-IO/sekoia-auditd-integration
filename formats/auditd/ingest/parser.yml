@@ -1,122 +1,208 @@
 name: linux-auditd
 ignored_values: null
 pipeline:
-  - name: grok_audit
-    description: ''
-    filter: ''
+  - name: parsed_event
     external:
       name: grok.match
       properties:
-        input_field: original.message
+        input_field: "{{original.message}}"
         output_field: message
         pattern: >-
-          node=%{DATA:node}\s+type=%{WORD:audit_type}\s+msg=audit\(%{NUMBER:audit_time}\:%{NUMBER:audit_id}\):\s+%{GREEDYDATA:audit_kv}
+          node=%{DATA:node}\s+type=%{WORD:audit_type}\s+msg=audit\(%{NUMBER:audit_time}:%{NUMBER:audit_id}\):\s+%{GREEDYDATA:audit_kv}
         custom_patterns: {}
-  - name: date
-    description: ''
-    filter: ''
+
+  - name: parsed_date
     external:
       name: date.parse
       properties:
-        input_field: >-
-          {{ grok_audit.message.audit_time }}
-        output_field: 'timestamp'
-        format: 'timestamp'
+        input_field: "{{parsed_event.message.audit_time}}"
+        output_field: timestamp
+        format: timestamp
         timezone: UTC
-  - name: normalize_fields_1
-    description: ''
-    filter: ''
-    external: null
-  - name: kv_parse
-    description: ''
-    filter: ''
+
+  - name: kv_parsed_main
     external:
       name: kv.parse-kv
       properties:
-        input_field: grok_audit.message.audit_kv
+        input_field: "{{parsed_event.message.audit_kv}}"
         output_field: message
-        value_sep: '='
+        value_sep: "="
         item_sep: \s
-  - name: normalize_fields
-    description: ''
-    filter: ''
-    external: null
-  - name: kv_parse_msg
-    description: ''
-    filter: ''
+
+  - name: kv_parsed_nested
+    filter: "{{kv_parsed_main.message.msg is defined}}"
     external:
       name: kv.parse-kv
       properties:
-        input_field: '{{kv_parse.message.msg}}'
+        input_field: "{{kv_parsed_main.message.msg}}"
         output_field: message
-        value_sep: '='
+        value_sep: "="
         item_sep: \s
-  - name: normalize_msg_fields
-    description: ''
-    filter: ''
-    external: null
+
+  - name: set_event_common_fields
+  - name: set_host_fields
+  - name: set_user_fields
+  - name: set_process_fields
+  - name: set_file_fields
+  - name: set_network_fields
+  - name: set_tls_fields
+  - name: set_linux_audit_fields
+  - name: set_ecs_categorization
+  - name: set_action_fields
+
 stages:
-  normalize_fields_1:
+  set_event_common_fields:
     actions:
       - set:
+          "@timestamp": "{{parsed_date.timestamp}}"
+          event.kind: event
           event.module: auditd
           event.dataset: linux.auditd
-          event.kind: event
-          host.name: '{{grok_audit.message.node}}'
-          event.type: '{{grok_audit.message.audit_type | lower}}'
-          event.sequence: '{{grok_audit.message.audit_id | int}}'
-          '@timestamp': '{{date.timestamp}}'
+          event.type: "{{parsed_event.message.audit_type | lower}}"
+          event.sequence: "{{parsed_event.message.audit_id | int}}"
+          event.action: "{{kv_parsed_nested.message.op}}"
+          event.provider: "{{kv_parsed_nested.message.grantors}}"
+          event.outcome: "{{kv_parsed_nested.message.res}}"
+
+  set_host_fields:
+    actions:
+      - set:
+          host.name: "{{parsed_event.message.node}}"
           host.os.type: linux
-        filter: ''
-        name: set
-  normalize_fields:
+
+  set_user_fields:
     actions:
       - set:
-          user.id: '{{kv_parse.message.uid}}'
-          process.pid: '{{kv_parse.message.pid}}'
-          event.reason: '{{kv_parse.message.pid}}'
-          user.effective.id: '{{kv_parse.message.auid or kv_parse_msg.message.suid}}'
-          linux.audit.user.session.id: '{{kv_parse.message.ses}}'
-          linux.audit.user.audit.id: '{{kv_parse.message.auid}}'
-          linux.audit.process.selinux.context: '{{kv_parse.message.subj}}'
-          linux.audit.data.item: '{{kv_parse.message.item}}'
-          linux.audit.file.rdev: '{{kv_parse.message.rdev}}'
-          linux.audit.data.nametype: '{{kv_parse.message.nametype}}'
-          file.path: '{{kv_parse.message.name}}'
-          file.inode: '{{kv_parse.message.inode}}'
-          file.device: '{{kv_parse.message.dev}}'
-          file.mode: '{{kv_parse.message.mode}}'
-          file.owner: '{{kv_parse.message.ouid}}'
-          file.group: '{{kv_parse.message.ogid}}'
-        filter: ''
-        name: set
+          user.id: "{{kv_parsed_main.message.uid}}"
+          user.name: "{{kv_parsed_nested.message.acct}}"
+          user.effective.id: "{{kv_parsed_main.message.auid or kv_parsed_nested.message.suid}}"
 
-  normalize_msg_fields:
+  set_process_fields:
     actions:
       - set:
-          event.action: '{{kv_parse_msg.message.op}}'
-          event.provider: '{{kv_parse_msg.message.grantors}}'
-          user.name: '{{kv_parse_msg.message.acct}}'
-          process.executable: '{{kv_parse_msg.message.exe}}'
-          source.domain: '{{kv_parse_msg.message.hostname}}'
-          source.ip: '{{kv_parse_msg.message.addr}}'
-          service.name: '{{kv_parse_msg.message.terminal}}'
-          action.outcome: '{{kv_parse_msg.message.res}}'
-          tls.cipher: '{{kv_parse_msg.message.cipher}}'
-          tls.curve: '{{kv_parse_msg.message.pfs}}'
-          tls.client.x509.public_key_size: '{{kv_parse_msg.message.ksize}}'
-          tls.client.x509.signature_algorithm: '{{kv_parse_msg.message.mac}}'
-          process.parent.pid: '{{kv_parse_msg.message.spid}}'
-          source.port: '{{kv_parse_msg.message.rport}}'
-          destination.port: '{{kv_parse_msg.message.lport}}'
-          destination.ip: '{{kv_parse_msg.message.laddr}}'
-        filter: ''
-        name: set
+          process.pid: "{{kv_parsed_main.message.pid}}"
+          process.executable: "{{kv_parsed_nested.message.exe}}"
+          process.parent.pid: "{{kv_parsed_nested.message.spid}}"
+
+  set_file_fields:
+    actions:
+      - set:
+          file.path: "{{kv_parsed_main.message.name}}"
+          file.inode: "{{kv_parsed_main.message.inode}}"
+          file.device: "{{kv_parsed_main.message.dev}}"
+          file.mode: "{{kv_parsed_main.message.mode}}"
+          file.owner: "{{kv_parsed_main.message.ouid}}"
+          file.group: "{{kv_parsed_main.message.ogid}}"
+
+  set_network_fields:
+    actions:
+      - set:
+          source.ip: "{{kv_parsed_nested.message.addr}}"
+        filter: "{{kv_parsed_nested.message.addr | is_ipaddress}}"
 
       - set:
-          network.direction: "inbound"
-        filter: '{{ kv_parse_msg.message.direction == "to-client" }}'
+          source.domain: "{{kv_parsed_nested.message.hostname}}"
+        filter: '{{kv_parsed_nested.message.hostname != "?"}}'
 
       - set:
-          network.direction: "outbound"
-        filter: '{{ kv_parse_msg.message.direction == "from-client" }}'
+          source.port: "{{kv_parsed_nested.message.rport}}"
+
+      - set:
+          destination.port: "{{kv_parsed_nested.message.lport}}"
+          destination.ip: "{{kv_parsed_nested.message.laddr}}"
+
+      - set:
+          network.direction: inbound
+        filter: '{{kv_parsed_nested.message.direction == "to-client"}}'
+
+      - set:
+          network.direction: outbound
+        filter: '{{kv_parsed_nested.message.direction == "from-client"}}'
+
+  set_tls_fields:
+    actions:
+      - set:
+          tls.cipher: "{{kv_parsed_nested.message.cipher}}"
+          tls.curve: "{{kv_parsed_nested.message.pfs}}"
+          tls.client.x509.public_key_size: "{{kv_parsed_nested.message.ksize}}"
+          tls.client.x509.signature_algorithm: "{{kv_parsed_nested.message.mac}}"
+
+  set_linux_audit_fields:
+    actions:
+      - set:
+          linux.audit.user.session.id: "{{kv_parsed_main.message.ses}}"
+          linux.audit.user.audit.id: "{{kv_parsed_main.message.auid}}"
+          linux.audit.process.selinux.context: "{{kv_parsed_main.message.subj}}"
+          linux.audit.data.item: "{{kv_parsed_main.message.item}}"
+          linux.audit.file.rdev: "{{kv_parsed_main.message.rdev}}"
+          linux.audit.data.nametype: "{{kv_parsed_main.message.nametype}}"
+
+      - set:
+          service.name: "{{kv_parsed_nested.message.terminal}}"
+        filter: '{{kv_parsed_nested.message.terminal != "?"}}'
+
+  set_ecs_categorization:
+    actions:
+      # Authentication events
+      - set:
+          event.category: "['authentication']"
+          event.type: "['start']"
+        filter: >-
+          {{final.event.type in ['cred_acq', 'user_auth', 'user_login'] or
+          (final.event.action and 'auth' in final.event.action | lower)}}
+
+      # Session events
+      - set:
+          event.category: "['session']"
+          event.type: "['start']"
+        filter: "{{final.event.type in ['user_start', 'crypto_session']}}"
+
+      - set:
+          event.category: "['session']"
+          event.type: "['end']"
+        filter: "{{final.event.type in ['user_end', 'user_logout', 'cred_disp']}}"
+
+      # Process events
+      - set:
+          event.category: "['process']"
+          event.type: "['start']"
+        filter: "{{final.event.type in ['execve', 'syscall'] and final.process.executable}}"
+
+      # File events
+      - set:
+          event.category: "['file']"
+          event.type: "['access']"
+        filter: "{{final.event.type == 'path' and final.file.path}}"
+
+      # Network events
+      - set:
+          event.category: "['network']"
+        filter: >-
+          {{final.event.type in ['crypto_session', 'sockaddr'] or
+          (final.source.ip or final.destination.ip)}}
+
+      # Default categorization if none matched
+      - set:
+          event.category: "['host']"
+        filter: "{{final.event.category is not defined}}"
+
+  set_action_fields:
+    actions:
+      # Set action outcome for authentication
+      - set:
+          action.outcome: success
+        filter: >-
+          {{final.event.outcome == 'success' or
+          (final.event.type in ['cred_acq', 'user_login'] and
+          final.event.outcome != 'failure')}}
+
+      - set:
+          action.outcome: failure
+        filter: >-
+          {{final.event.outcome == 'failure' or
+          final.event.outcome == 'fail'}}
+
+      # Copy event.outcome to action.outcome if not set
+      - set:
+          action.outcome: "{{final.event.outcome}}"
+        filter: "{{final.action.outcome is not defined and final.event.outcome}}"

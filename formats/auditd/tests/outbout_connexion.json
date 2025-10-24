@@ -12,13 +12,17 @@
     "message": "node=dctwebvlp115.gemalto.com type=CRYPTO_SESSION msg=audit(1756991161.990:3169942): pid=171026 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=start direction=from-client cipher=aes256-ctr ksize=256 mac=hmac-sha2-256 pfs=curve25519-sha256 spid=171033 suid=74 rport=56296 laddr=10.9.174.71 lport=13459  exe=\"/usr/sbin/sshd\" hostname=? addr=10.51.199.131 terminal=? res=success'",
     "event": {
       "action": "start",
+      "category": [
+        "session"
+      ],
       "dataset": "linux.auditd",
       "kind": "event",
       "module": "auditd",
       "outcome": "success",
-      "reason": "171026",
       "sequence": 3169942,
-      "type": "crypto_session"
+      "type": [
+        "start"
+      ]
     },
     "@timestamp": "2025-09-04T13:06:01.990000Z",
     "action": {
@@ -63,20 +67,13 @@
       "pid": 171026
     },
     "related": {
-      "hosts": [
-        "?"
-      ],
       "ip": [
         "10.51.199.131",
         "10.9.174.71"
       ]
     },
-    "service": {
-      "name": "?"
-    },
     "source": {
-      "address": "?",
-      "domain": "?",
+      "address": "10.51.199.131",
       "ip": "10.51.199.131",
       "port": 56296
     },
