@@ -100,16 +100,107 @@ def test_intakes_produce_expected_messages(request, manager, intakes_root, test_
     assert parsed_sorted == expected_sorted
 
 
-def test_intake_format_coverage(manager, module, intake_format):
+def test_intake_format_coverage(request, manager, module, intake_format):
     coverage = manager.get_coverage(module, intake_format)
 
     print(f"Coverage: {coverage['percent']}")
-    print("Steps missing coverage:\n")
 
-    for missing in coverage.get("missing", []):
-        print(missing)
+    # If --analyze-coverage is enabled, display detailed analysis
+    if request.config.getoption("analyze_coverage"):
+        analyze_coverage_details(coverage, module, intake_format)
+    else:
+        # Simple display by default
+        print("Steps missing coverage:\n")
+        for missing in coverage.get("missing", []):
+            print(missing)
 
     assert coverage["percent"] >= 75
+
+
+def analyze_coverage_details(coverage, module, intake_format):
+    """Display detailed coverage analysis"""
+    from pathlib import Path
+
+    # Load parser to analyze stages
+    parser_path = Path(f'../formats/{intake_format}/ingest/parser.yml')
+    if not parser_path.exists():
+        print(f'⚠️  Parser not found: {parser_path}')
+        return
+
+    with open(parser_path) as f:
+        parser = yaml.safe_load(f)
+
+    print('=' * 80)
+    print(f'📊 DETAILED COVERAGE ANALYSIS - {intake_format.upper()}')
+    print('=' * 80)
+    print(f'\n✓ Overall coverage: {round(coverage["percent"], 2)}%')
+    print(f'  (Target: >= 75%)\n')
+
+    if not coverage['missing']:
+        print('✅ 100% coverage - All paths are tested!\n')
+        print('=' * 80)
+        return
+
+    # Group by stage
+    stages = {}
+    for step in coverage['missing']:
+        parts = step.split(':')
+        if len(parts) >= 3:
+            stage_name = parts[1]
+            step_num = int(parts[2])
+            if stage_name not in stages:
+                stages[stage_name] = []
+            stages[stage_name].append(step_num)
+
+    print(f'⚠️  Uncovered steps: {len(coverage["missing"])}\n')
+    print('=' * 80)
+
+    # Analyze each stage
+    for stage_name in sorted(stages.keys()):
+        print(f'\n📦 STAGE: {stage_name}')
+        print('-' * 80)
+
+        if stage_name not in parser.get('stages', {}):
+            print(f'  ⚠️  Stage not found in parser')
+            continue
+
+        actions = parser['stages'][stage_name].get('actions', [])
+        total_actions = len(actions)
+        uncovered_actions = len(stages[stage_name])
+        covered_actions = total_actions - uncovered_actions
+
+        print(f'  Coverage: {covered_actions}/{total_actions} actions covered')
+        print()
+
+        for step_num in sorted(stages[stage_name]):
+            if step_num >= len(actions):
+                continue
+
+            action = actions[step_num]
+            print(f'  ❌ Action #{step_num} (NOT COVERED):')
+
+            # Display defined fields
+            if 'set' in action:
+                fields = list(action['set'].keys())
+                print(f'     • Sets: {", ".join(fields)}')
+
+            # Display filter
+            if 'filter' in action:
+                filter_text = str(action['filter'])
+                # Clean and format filter
+                filter_lines = filter_text.strip().split('\n')
+                if len(filter_lines) == 1:
+                    print(f'     • Condition: {filter_lines[0][:120]}')
+                else:
+                    print(f'     • Condition:')
+                    for line in filter_lines[:3]:
+                        cleaned = line.strip()
+                        if cleaned:
+                            print(f'         {cleaned[:100]}')
+            else:
+                print(f'     • Condition: None (always executed)')
+
+            print()
 
 
 def read_taxonomy(format_fields_path) -> dict:

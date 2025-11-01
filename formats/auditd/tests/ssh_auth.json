@@ -11,14 +11,12 @@
   "expected": {
     "message": "node=dctappvlp210.gemalto.com type=CRED_ACQ msg=audit(1756988104.739:4091908): pid=228411 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=PAM:setcred grantors=pam_env,pam_localuser,pam_unix acct=\"GEMALTO\\dctsftptransfer\" exe=\"/usr/sbin/sshd\" hostname=dct02per.gemalto.com addr=10.51.196.67 terminal=ssh res=success'",
     "event": {
-      "action": "PAM:setcred",
       "category": [
         "authentication"
       ],
       "dataset": "linux.auditd",
       "kind": "event",
       "module": "auditd",
-      "outcome": "success",
       "provider": "pam_env,pam_localuser,pam_unix",
       "sequence": 4091908,
       "type": [
@@ -26,9 +24,6 @@
       ]
     },
     "@timestamp": "2025-09-04T12:15:04.739000Z",
-    "action": {
-      "outcome": "success"
-    },
     "host": {
       "name": "dctappvlp210.gemalto.com",
       "os": {
@@ -37,11 +32,16 @@
     },
     "linux": {
       "audit": {
+        "event": {
+          "outcome": "success"
+        },
+        "operation": "PAM:setcred",
         "process": {
           "selinux": {
             "context": "system_u:system_r:sshd_t:s0-s0:c0.c1023"
           }
         },
+        "type": "cred_acq",
         "user": {
           "audit": {
             "id": 4294967295

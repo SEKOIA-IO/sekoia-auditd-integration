@@ -177,6 +177,13 @@ def pytest_addoption(parser):
         help="Add missing fields into fields.yml (aka taxonomy)",
     )
 
+    parser.addoption(
+        "--analyze-coverage",
+        action="store_true",
+        default=False,
+        help="Display detailed coverage analysis with recommendations",
+    )
+
 
 def pytest_configure(config):
     modules = config.getoption("module")
@@ -208,6 +215,15 @@ def pytest_configure(config):
             intake_formats = list(changed_formats)
 
     _manager.load(modules=modules, intake_formats=intake_formats)
+
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_runtest_call(item):
+    """Hook to deactivate output capture if --analyze-coverage is used, to display prints"""
+    if item.config.getoption("analyze_coverage") and "coverage" in item.name:
+        capman = item.config.pluginmanager.getplugin("capturemanager")
+        if capman:
+            capman.suspend_global_capture(in_=True)
 
 
 def pytest_generate_tests(metafunc):

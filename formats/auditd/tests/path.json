@@ -12,13 +12,15 @@
     "message": "node=dctwebvlp135.gemalto.com type=PATH msg=audit(1756987201.487:21467425): item=0 name=\"./default/\" inode=393249 dev=fd:02 mode=040750 ouid=0 ogid=1810 rdev=00:00 obj=unconfined_u:object_r:user_tmp_t:s0 nametype=PARENT",
     "event": {
       "category": [
-        "host"
+        "file"
       ],
       "dataset": "linux.auditd",
       "kind": "event",
       "module": "auditd",
       "sequence": 21467425,
-      "type": "path"
+      "type": [
+        "access"
+      ]
     },
     "@timestamp": "2025-09-04T12:00:01.487000Z",
     "file": {
@@ -45,7 +47,8 @@
         },
         "file": {
           "rdev": "00:00"
-        }
+        },
+        "type": "path"
       }
     },
     "related": {

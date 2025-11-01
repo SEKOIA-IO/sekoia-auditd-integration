@@ -48,7 +48,6 @@ pipeline:
   - name: set_tls_fields
   - name: set_linux_audit_fields
   - name: set_ecs_categorization
-  - name: set_action_fields
 
 stages:
   set_event_common_fields:
@@ -58,11 +57,8 @@ stages:
           event.kind: event
           event.module: auditd
           event.dataset: linux.auditd
-          event.type: "{{parsed_event.message.audit_type | lower}}"
           event.sequence: "{{parsed_event.message.audit_id | int}}"
-          event.action: "{{kv_parsed_nested.message.op}}"
           event.provider: "{{kv_parsed_nested.message.grantors}}"
-          event.outcome: "{{kv_parsed_nested.message.res}}"
 
   set_host_fields:
     actions:
@@ -136,6 +132,9 @@ stages:
           linux.audit.data.item: "{{kv_parsed_main.message.item}}"
           linux.audit.file.rdev: "{{kv_parsed_main.message.rdev}}"
           linux.audit.data.nametype: "{{kv_parsed_main.message.nametype}}"
+          linux.audit.operation: "{{kv_parsed_nested.message.op}}"
+          linux.audit.type: "{{parsed_event.message.audit_type | lower}}"
+          linux.audit.event.outcome: "{{kv_parsed_nested.message.res}}"
 
       - set:
           service.name: "{{kv_parsed_nested.message.terminal}}"
@@ -145,64 +144,17 @@ stages:
     actions:
       # Authentication events
       - set:
-          event.category: "['authentication']"
-          event.type: "['start']"
-        filter: >-
-          {{final.event.type in ['cred_acq', 'user_auth', 'user_login'] or
-          (final.event.action and 'auth' in final.event.action | lower)}}
-
-      # Session events
-      - set:
-          event.category: "['session']"
-          event.type: "['start']"
-        filter: "{{final.event.type in ['user_start', 'crypto_session']}}"
+          event.category: [authentication]
+          event.type: [start]
+        filter: "{{parsed_event.message.audit_type | lower == 'cred_acq'}}"
 
       - set:
-          event.category: "['session']"
-          event.type: "['end']"
-        filter: "{{final.event.type in ['user_end', 'user_logout', 'cred_disp']}}"
-
-      # Process events
-      - set:
-          event.category: "['process']"
-          event.type: "['start']"
-        filter: "{{final.event.type in ['execve', 'syscall'] and final.process.executable}}"
+          event.category: [session]
+          event.type: [start]
+        filter: "{{parsed_event.message.audit_type | lower == 'crypto_session'}}"
 
       # File events
       - set:
-          event.category: "['file']"
-          event.type: "['access']"
-        filter: "{{final.event.type == 'path' and final.file.path}}"
-
-      # Network events
-      - set:
-          event.category: "['network']"
-        filter: >-
-          {{final.event.type in ['crypto_session', 'sockaddr'] or
-          (final.source.ip or final.destination.ip)}}
-
-      # Default categorization if none matched
-      - set:
-          event.category: "['host']"
-        filter: "{{final.event.category is not defined}}"
-
-  set_action_fields:
-    actions:
-      # Set action outcome for authentication
-      - set:
-          action.outcome: success
-        filter: >-
-          {{final.event.outcome == 'success' or
-          (final.event.type in ['cred_acq', 'user_login'] and
-          final.event.outcome != 'failure')}}
-
-      - set:
-          action.outcome: failure
-        filter: >-
-          {{final.event.outcome == 'failure' or
-          final.event.outcome == 'fail'}}
-
-      # Copy event.outcome to action.outcome if not set
-      - set:
-          action.outcome: "{{final.event.outcome}}"
-        filter: "{{final.action.outcome is not defined and final.event.outcome}}"
+          event.category: [file]
+          event.type: [access]
+        filter: "{{parsed_event.message.audit_type | lower == 'path'}}"

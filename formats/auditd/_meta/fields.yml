@@ -1,29 +1,44 @@
-linux.audit.user.session.id:
-  description: "Session ID"
-  name: linux.audit.user.session.id
-  type: number
-
-linux.audit.user.audit.id:
-  description: "Audit user ID"
-  name: linux.audit.user.audit.id
-  type: number
-
 linux.audit.data.item:
-  description: "Index de l'élément PATH"
+  description: Index of PATH item
   name: linux.audit.data.item
   type: number
 
-linux.audit.process.selinux.context:
-  description: "Contexte SELinux"
-  name: linux.audit.process.selinux.context
-  type: text
-
 linux.audit.data.nametype:
-  description: "Name type"
+  description: Name type
   name: linux.audit.data.nametype
   type: text
 
+linux.audit.event.outcome:
+  description: ''
+  name: linux.audit.event.outcome
+  type: keyword
+
 linux.audit.file.rdev:
-  description: "Special device id"
+  description: Special device id
   name: linux.audit.file.rdev
   type: text
+
+linux.audit.operation:
+  description: Operation
+  name: linux.audit.operation
+  type: keyword
+
+linux.audit.process.selinux.context:
+  description: Contexte SELinux
+  name: linux.audit.process.selinux.context
+  type: text
+
+linux.audit.type:
+  description: Type
+  name: linux.audit.type
+  type: keyword
+
+linux.audit.user.audit.id:
+  description: Audit user ID
+  name: linux.audit.user.audit.id
+  type: number
+
+linux.audit.user.session.id:
+  description: Session ID
+  name: linux.audit.user.session.id
+  type: number
