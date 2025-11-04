@@ -1,0 +1,14 @@
+{
+  "input": {
+    "sekoiaio": {
+      "intake": {
+        "dialect": "Auditd",
+        "dialect_uuid": "1cdcdfeb-decc-4c3b-b969-b867c03118c7"
+      }
+    },
+    "message": "node=dctdnsvlp01.gemalto.com type=AVC msg=audit(1761288129.188:1557909): avc:  denied  { execute } for  pid=35602 comm=\"snmpd\" name=\"bind\" dev=\"dm-0\" ino=6293605 scontext=system_u:system_r:snmpd_t:s0 tcontext=unconfined_u:object_r:user_home_t:s0 tclass=file permissive=1"
+  },
+  "expected": {
+    "message": "node=dctdnsvlp01.gemalto.com type=AVC msg=audit(1761288129.188:1557909): avc:  denied  { execute } for  pid=35602 comm=\"snmpd\" name=\"bind\" dev=\"dm-0\" ino=6293605 scontext=system_u:system_r:snmpd_t:s0 tcontext=unconfined_u:object_r:user_home_t:s0 tclass=file permissive=1"
+  }
+}

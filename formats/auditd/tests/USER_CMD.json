@@ -1,0 +1,14 @@
+{
+  "input": {
+    "sekoiaio": {
+      "intake": {
+        "dialect": "Auditd",
+        "dialect_uuid": "1cdcdfeb-decc-4c3b-b969-b867c03118c7"
+      }
+    },
+    "message": "node=xxxdc1irmbdd01u.usr.hza.infra.xxxx type=USER_CMD msg=audit(1761288178.347:347533): pid=54552 uid=0 auid=4294967295 ses=4294967295 msg='cwd=\"/\" cmd=646D696465636F6465202D2D737472696E6720636861737369732D74797065 terminal=? res=success'"
+  },
+  "expected": {
+    "message": "node=xxxdc1irmbdd01u.usr.hza.infra.xxxx type=USER_CMD msg=audit(1761288178.347:347533): pid=54552 uid=0 auid=4294967295 ses=4294967295 msg='cwd=\"/\" cmd=646D696465636F6465202D2D737472696E6720636861737369732D74797065 terminal=? res=success'"
+  }
+}

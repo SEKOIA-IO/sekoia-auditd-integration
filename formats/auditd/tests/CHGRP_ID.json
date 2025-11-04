@@ -1,0 +1,14 @@
+{
+  "input": {
+    "sekoiaio": {
+      "intake": {
+        "dialect": "Auditd",
+        "dialect_uuid": "1cdcdfeb-decc-4c3b-b969-b867c03118c7"
+      }
+    },
+    "message": "node=dctwebvlp105.gemalto.com type=CHGRP_ID msg=audit(1761290203.062:4786458): pid=140054 uid=0 auid=0 ses=232145 subj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 msg='op=changing new_gid=1801 id=0 exe=\"/usr/bin/newgrp\" hostname=? addr=? terminal=? res=success'"
+  },
+  "expected": {
+    "message": "node=dctwebvlp105.gemalto.com type=CHGRP_ID msg=audit(1761290203.062:4786458): pid=140054 uid=0 auid=0 ses=232145 subj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 msg='op=changing new_gid=1801 id=0 exe=\"/usr/bin/newgrp\" hostname=? addr=? terminal=? res=success'"
+  }
+}

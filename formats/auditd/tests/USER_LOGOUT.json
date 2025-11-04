@@ -1,0 +1,14 @@
+{
+  "input": {
+    "sekoiaio": {
+      "intake": {
+        "dialect": "Auditd",
+        "dialect_uuid": "1cdcdfeb-decc-4c3b-b969-b867c03118c7"
+      }
+    },
+    "message": "node=dctappvli179.gemalto.com type=USER_LOGOUT msg=audit(1761288105.816:170771): pid=232464 uid=0 auid=594206352 ses=5602 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=login id=594206352 exe=\"/usr/sbin/sshd\" hostname=dct02per.gemalto.com addr=10.51.196.67 terminal=ssh res=success'"
+  },
+  "expected": {
+    "message": "node=dctappvli179.gemalto.com type=USER_LOGOUT msg=audit(1761288105.816:170771): pid=232464 uid=0 auid=594206352 ses=5602 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=login id=594206352 exe=\"/usr/sbin/sshd\" hostname=dct02per.gemalto.com addr=10.51.196.67 terminal=ssh res=success'"
+  }
+}
