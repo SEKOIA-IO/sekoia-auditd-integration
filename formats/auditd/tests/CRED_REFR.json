@@ -10,8 +10,8 @@
   },
   "expected": {
     "message": "node=dctappvli150.gemalto.com type=CRED_REFR msg=audit(1761290861.770:10510): pid=65671 uid=0 auid=0 ses=242 subj=system_u:system_r:crond_t:s0-s0:c0.c1023 msg='op=PAM:setcred grantors=pam_env,pam_localuser,pam_unix acct=\"root\" exe=\"/usr/sbin/crond\" hostname=? addr=? terminal=cron res=success'",
-    "id": "00000000-0000-0000-0000-000000000000",
     "event": {
+      "id": "00000000-0000-0000-0000-000000000000",
       "dataset": "linux.auditd",
       "kind": "event",
       "module": "auditd",

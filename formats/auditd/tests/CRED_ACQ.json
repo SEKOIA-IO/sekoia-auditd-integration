@@ -10,8 +10,8 @@
   },
   "expected": {
     "message": "node=dctappvlp210.gemalto.com type=CRED_ACQ msg=audit(1756988104.739:4091908): pid=228411 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=PAM:setcred grantors=pam_env,pam_localuser,pam_unix acct=\"GEMALTO\\dctsftptransfer\" exe=\"/usr/sbin/sshd\" hostname=dct02per.gemalto.com addr=10.51.196.67 terminal=ssh res=success'",
-    "id": "00000000-0000-0000-0000-000000000000",
     "event": {
+      "id": "00000000-0000-0000-0000-000000000000",
       "category": [
         "authentication"
       ],

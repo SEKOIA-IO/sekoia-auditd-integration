@@ -10,8 +10,8 @@
   },
   "expected": {
     "message": "node=dctappvli179.gemalto.com type=CRYPTO_KEY_USER msg=audit(1761288105.470:170749): pid=232467 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=destroy kind=server fp=SHA256:12:e4:f4:9d:7f:0f:f3:8d:25:a7:9d:a0:d6:ea:42:c7:94:09:68:c8:6d:0b:78:13:95:12:3b:cf:28:48:8e:8f direction=? spid=232467 suid=0  exe=\"/usr/sbin/sshd\" hostname=? addr=? terminal=? res=success'",
-    "id": "00000000-0000-0000-0000-000000000000",
     "event": {
+      "id": "00000000-0000-0000-0000-000000000000",
       "dataset": "linux.auditd",
       "kind": "event",
       "module": "auditd",
