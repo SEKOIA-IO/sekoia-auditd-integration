@@ -9,6 +9,51 @@
     "message": "node=dctappvli151.gemalto.com type=SERVICE_START msg=audit(1761290800.444:19397): pid=1 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:init_t:s0 msg='unit=docker-cleanup comm=\"systemd\" exe=\"/usr/lib/systemd/systemd\" hostname=? addr=? terminal=? res=success'"
   },
   "expected": {
-    "message": "node=dctappvli151.gemalto.com type=SERVICE_START msg=audit(1761290800.444:19397): pid=1 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:init_t:s0 msg='unit=docker-cleanup comm=\"systemd\" exe=\"/usr/lib/systemd/systemd\" hostname=? addr=? terminal=? res=success'"
+    "message": "node=dctappvli151.gemalto.com type=SERVICE_START msg=audit(1761290800.444:19397): pid=1 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:init_t:s0 msg='unit=docker-cleanup comm=\"systemd\" exe=\"/usr/lib/systemd/systemd\" hostname=? addr=? terminal=? res=success'",
+    "event": {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "dataset": "linux.auditd",
+      "kind": "event",
+      "module": "auditd",
+      "sequence": 19397
+    },
+    "@timestamp": "2025-10-24T07:26:40.444000Z",
+    "host": {
+      "name": "dctappvli151.gemalto.com",
+      "os": {
+        "type": "linux"
+      }
+    },
+    "linux": {
+      "audit": {
+        "event": {
+          "outcome": "success"
+        },
+        "process": {
+          "selinux": {
+            "context": "system_u:system_r:init_t:s0"
+          }
+        },
+        "type": "service_start",
+        "user": {
+          "audit": {
+            "id": 4294967295
+          },
+          "session": {
+            "id": 4294967295
+          }
+        }
+      }
+    },
+    "process": {
+      "executable": "/usr/lib/systemd/systemd",
+      "pid": 1
+    },
+    "user": {
+      "effective": {
+        "id": "4294967295"
+      },
+      "id": "0"
+    }
   }
 }

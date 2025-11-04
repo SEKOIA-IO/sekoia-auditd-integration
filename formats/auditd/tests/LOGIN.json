@@ -9,6 +9,47 @@
     "message": "node=dctappvli127.gemalto.com type=LOGIN msg=audit(1761288401.521:12160): pid=111823 uid=0 subj=system_u:system_r:crond_t:s0-s0:c0.c1023 old auid=4294967295 new auid=0 old ses=4294967295 new ses=1794"
   },
   "expected": {
-    "message": "node=dctappvli127.gemalto.com type=LOGIN msg=audit(1761288401.521:12160): pid=111823 uid=0 subj=system_u:system_r:crond_t:s0-s0:c0.c1023 old auid=4294967295 new auid=0 old ses=4294967295 new ses=1794"
+    "message": "node=dctappvli127.gemalto.com type=LOGIN msg=audit(1761288401.521:12160): pid=111823 uid=0 subj=system_u:system_r:crond_t:s0-s0:c0.c1023 old auid=4294967295 new auid=0 old ses=4294967295 new ses=1794",
+    "event": {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "dataset": "linux.auditd",
+      "kind": "event",
+      "module": "auditd",
+      "sequence": 12160
+    },
+    "@timestamp": "2025-10-24T06:46:41.521000Z",
+    "host": {
+      "name": "dctappvli127.gemalto.com",
+      "os": {
+        "type": "linux"
+      }
+    },
+    "linux": {
+      "audit": {
+        "process": {
+          "selinux": {
+            "context": "system_u:system_r:crond_t:s0-s0:c0.c1023 old"
+          }
+        },
+        "type": "login",
+        "user": {
+          "audit": {
+            "id": 0
+          },
+          "session": {
+            "id": 0
+          }
+        }
+      }
+    },
+    "process": {
+      "pid": 111823
+    },
+    "user": {
+      "effective": {
+        "id": "4294967295 new"
+      },
+      "id": "0"
+    }
   }
 }

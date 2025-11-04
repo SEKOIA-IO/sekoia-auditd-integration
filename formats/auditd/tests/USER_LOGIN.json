@@ -9,6 +9,71 @@
     "message": "node=dctappvli179.gemalto.com type=USER_LOGIN msg=audit(1761288105.775:170767): pid=232464 uid=0 auid=594206352 ses=5602 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=login id=594206352 exe=\"/usr/sbin/sshd\" hostname=dct02per.gemalto.com addr=10.51.196.67 terminal=ssh res=success'"
   },
   "expected": {
-    "message": "node=dctappvli179.gemalto.com type=USER_LOGIN msg=audit(1761288105.775:170767): pid=232464 uid=0 auid=594206352 ses=5602 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=login id=594206352 exe=\"/usr/sbin/sshd\" hostname=dct02per.gemalto.com addr=10.51.196.67 terminal=ssh res=success'"
+    "message": "node=dctappvli179.gemalto.com type=USER_LOGIN msg=audit(1761288105.775:170767): pid=232464 uid=0 auid=594206352 ses=5602 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=login id=594206352 exe=\"/usr/sbin/sshd\" hostname=dct02per.gemalto.com addr=10.51.196.67 terminal=ssh res=success'",
+    "event": {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "dataset": "linux.auditd",
+      "kind": "event",
+      "module": "auditd",
+      "sequence": 170767
+    },
+    "@timestamp": "2025-10-24T06:41:45.775000Z",
+    "host": {
+      "name": "dctappvli179.gemalto.com",
+      "os": {
+        "type": "linux"
+      }
+    },
+    "linux": {
+      "audit": {
+        "event": {
+          "outcome": "success"
+        },
+        "operation": "login",
+        "process": {
+          "selinux": {
+            "context": "system_u:system_r:sshd_t:s0-s0:c0.c1023"
+          }
+        },
+        "type": "user_login",
+        "user": {
+          "audit": {
+            "id": 594206352
+          },
+          "session": {
+            "id": 5602
+          }
+        }
+      }
+    },
+    "process": {
+      "executable": "/usr/sbin/sshd",
+      "pid": 232464
+    },
+    "related": {
+      "hosts": [
+        "dct02per.gemalto.com"
+      ],
+      "ip": [
+        "10.51.196.67"
+      ]
+    },
+    "service": {
+      "name": "ssh"
+    },
+    "source": {
+      "address": "dct02per.gemalto.com",
+      "domain": "dct02per.gemalto.com",
+      "ip": "10.51.196.67",
+      "registered_domain": "gemalto.com",
+      "subdomain": "dct02per",
+      "top_level_domain": "com"
+    },
+    "user": {
+      "effective": {
+        "id": "594206352"
+      },
+      "id": "0"
+    }
   }
 }

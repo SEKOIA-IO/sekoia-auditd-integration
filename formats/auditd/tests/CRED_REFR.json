@@ -9,6 +9,62 @@
     "message": "node=dctappvli150.gemalto.com type=CRED_REFR msg=audit(1761290861.770:10510): pid=65671 uid=0 auid=0 ses=242 subj=system_u:system_r:crond_t:s0-s0:c0.c1023 msg='op=PAM:setcred grantors=pam_env,pam_localuser,pam_unix acct=\"root\" exe=\"/usr/sbin/crond\" hostname=? addr=? terminal=cron res=success'"
   },
   "expected": {
-    "message": "node=dctappvli150.gemalto.com type=CRED_REFR msg=audit(1761290861.770:10510): pid=65671 uid=0 auid=0 ses=242 subj=system_u:system_r:crond_t:s0-s0:c0.c1023 msg='op=PAM:setcred grantors=pam_env,pam_localuser,pam_unix acct=\"root\" exe=\"/usr/sbin/crond\" hostname=? addr=? terminal=cron res=success'"
+    "message": "node=dctappvli150.gemalto.com type=CRED_REFR msg=audit(1761290861.770:10510): pid=65671 uid=0 auid=0 ses=242 subj=system_u:system_r:crond_t:s0-s0:c0.c1023 msg='op=PAM:setcred grantors=pam_env,pam_localuser,pam_unix acct=\"root\" exe=\"/usr/sbin/crond\" hostname=? addr=? terminal=cron res=success'",
+    "id": "00000000-0000-0000-0000-000000000000",
+    "event": {
+      "dataset": "linux.auditd",
+      "kind": "event",
+      "module": "auditd",
+      "provider": "pam_env,pam_localuser,pam_unix",
+      "sequence": 10510
+    },
+    "@timestamp": "2025-10-24T07:27:41.770000Z",
+    "host": {
+      "name": "dctappvli150.gemalto.com",
+      "os": {
+        "type": "linux"
+      }
+    },
+    "linux": {
+      "audit": {
+        "event": {
+          "outcome": "success"
+        },
+        "operation": "PAM:setcred",
+        "process": {
+          "selinux": {
+            "context": "system_u:system_r:crond_t:s0-s0:c0.c1023"
+          }
+        },
+        "type": "cred_refr",
+        "user": {
+          "audit": {
+            "id": 0
+          },
+          "session": {
+            "id": 242
+          }
+        }
+      }
+    },
+    "process": {
+      "executable": "/usr/sbin/crond",
+      "pid": 65671
+    },
+    "related": {
+      "user": [
+        "root"
+      ]
+    },
+    "service": {
+      "name": "cron"
+    },
+    "user": {
+      "effective": {
+        "id": "0"
+      },
+      "id": "0",
+      "name": "root"
+    }
   }
 }

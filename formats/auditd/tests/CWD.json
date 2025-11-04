@@ -9,6 +9,25 @@
     "message": "node=dctappvlp210.gemalto.com type=CWD msg=audit(1761288585.599:4101142):  cwd=\"/var/opt/OV/tmp\""
   },
   "expected": {
-    "message": "node=dctappvlp210.gemalto.com type=CWD msg=audit(1761288585.599:4101142):  cwd=\"/var/opt/OV/tmp\""
+    "message": "node=dctappvlp210.gemalto.com type=CWD msg=audit(1761288585.599:4101142):  cwd=\"/var/opt/OV/tmp\"",
+    "event": {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "dataset": "linux.auditd",
+      "kind": "event",
+      "module": "auditd",
+      "sequence": 4101142
+    },
+    "@timestamp": "2025-10-24T06:49:45.599000Z",
+    "host": {
+      "name": "dctappvlp210.gemalto.com",
+      "os": {
+        "type": "linux"
+      }
+    },
+    "linux": {
+      "audit": {
+        "type": "cwd"
+      }
+    }
   }
 }

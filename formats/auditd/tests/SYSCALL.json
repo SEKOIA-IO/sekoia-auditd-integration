@@ -9,6 +9,47 @@
     "message": "node=dctappvli179.gemalto.com type=SYSCALL msg=audit(1761288690.710:170869): arch=c000003e syscall=159 success=yes exit=0 a0=7ffc89c2bc40 a1=0 a2=4ec2c a3=1434 items=0 ppid=1 pid=3146 auid=4294967295 uid=997 gid=995 euid=997 suid=997 fsuid=997 egid=995 sgid=995 fsgid=995 tty=(none) ses=4294967295 comm=\"chronyd\" exe=\"/usr/sbin/chronyd\" subj=system_u:system_r:chronyd_t:s0 key=\"ids-sys-info\""
   },
   "expected": {
-    "message": "node=dctappvli179.gemalto.com type=SYSCALL msg=audit(1761288690.710:170869): arch=c000003e syscall=159 success=yes exit=0 a0=7ffc89c2bc40 a1=0 a2=4ec2c a3=1434 items=0 ppid=1 pid=3146 auid=4294967295 uid=997 gid=995 euid=997 suid=997 fsuid=997 egid=995 sgid=995 fsgid=995 tty=(none) ses=4294967295 comm=\"chronyd\" exe=\"/usr/sbin/chronyd\" subj=system_u:system_r:chronyd_t:s0 key=\"ids-sys-info\""
+    "message": "node=dctappvli179.gemalto.com type=SYSCALL msg=audit(1761288690.710:170869): arch=c000003e syscall=159 success=yes exit=0 a0=7ffc89c2bc40 a1=0 a2=4ec2c a3=1434 items=0 ppid=1 pid=3146 auid=4294967295 uid=997 gid=995 euid=997 suid=997 fsuid=997 egid=995 sgid=995 fsgid=995 tty=(none) ses=4294967295 comm=\"chronyd\" exe=\"/usr/sbin/chronyd\" subj=system_u:system_r:chronyd_t:s0 key=\"ids-sys-info\"",
+    "event": {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "dataset": "linux.auditd",
+      "kind": "event",
+      "module": "auditd",
+      "sequence": 170869
+    },
+    "@timestamp": "2025-10-24T06:51:30.710000Z",
+    "host": {
+      "name": "dctappvli179.gemalto.com",
+      "os": {
+        "type": "linux"
+      }
+    },
+    "linux": {
+      "audit": {
+        "process": {
+          "selinux": {
+            "context": "system_u:system_r:chronyd_t:s0"
+          }
+        },
+        "type": "syscall",
+        "user": {
+          "audit": {
+            "id": 4294967295
+          },
+          "session": {
+            "id": 4294967295
+          }
+        }
+      }
+    },
+    "process": {
+      "pid": 3146
+    },
+    "user": {
+      "effective": {
+        "id": "4294967295"
+      },
+      "id": "997"
+    }
   }
 }

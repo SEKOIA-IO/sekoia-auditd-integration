@@ -9,6 +9,66 @@
     "message": "node=dctappvli179.gemalto.com type=USER_AUTH msg=audit(1761288105.529:170754): pid=232464 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=pubkey_auth rport=49778 acct=\"GEMALTO\\dctsftptransfer\" exe=\"/usr/sbin/sshd\" hostname=? addr=10.51.196.67 terminal=? res=success'"
   },
   "expected": {
-    "message": "node=dctappvli179.gemalto.com type=USER_AUTH msg=audit(1761288105.529:170754): pid=232464 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=pubkey_auth rport=49778 acct=\"GEMALTO\\dctsftptransfer\" exe=\"/usr/sbin/sshd\" hostname=? addr=10.51.196.67 terminal=? res=success'"
+    "message": "node=dctappvli179.gemalto.com type=USER_AUTH msg=audit(1761288105.529:170754): pid=232464 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=pubkey_auth rport=49778 acct=\"GEMALTO\\dctsftptransfer\" exe=\"/usr/sbin/sshd\" hostname=? addr=10.51.196.67 terminal=? res=success'",
+    "event": {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "dataset": "linux.auditd",
+      "kind": "event",
+      "module": "auditd",
+      "sequence": 170754
+    },
+    "@timestamp": "2025-10-24T06:41:45.529000Z",
+    "host": {
+      "name": "dctappvli179.gemalto.com",
+      "os": {
+        "type": "linux"
+      }
+    },
+    "linux": {
+      "audit": {
+        "event": {
+          "outcome": "success"
+        },
+        "operation": "pubkey_auth",
+        "process": {
+          "selinux": {
+            "context": "system_u:system_r:sshd_t:s0-s0:c0.c1023"
+          }
+        },
+        "type": "user_auth",
+        "user": {
+          "audit": {
+            "id": 4294967295
+          },
+          "session": {
+            "id": 4294967295
+          }
+        }
+      }
+    },
+    "process": {
+      "executable": "/usr/sbin/sshd",
+      "pid": 232464
+    },
+    "related": {
+      "ip": [
+        "10.51.196.67"
+      ],
+      "user": [
+        "GEMALTO\\dctsftptransfer"
+      ]
+    },
+    "source": {
+      "address": "10.51.196.67",
+      "ip": "10.51.196.67",
+      "port": 49778
+    },
+    "user": {
+      "effective": {
+        "id": "4294967295"
+      },
+      "id": "0",
+      "name": "GEMALTO\\dctsftptransfer"
+    }
   }
 }

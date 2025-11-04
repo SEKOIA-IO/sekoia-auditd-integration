@@ -9,6 +9,34 @@
     "message": "node=dctdnsvlp01.gemalto.com type=AVC msg=audit(1761288129.188:1557909): avc:  denied  { execute } for  pid=35602 comm=\"snmpd\" name=\"bind\" dev=\"dm-0\" ino=6293605 scontext=system_u:system_r:snmpd_t:s0 tcontext=unconfined_u:object_r:user_home_t:s0 tclass=file permissive=1"
   },
   "expected": {
-    "message": "node=dctdnsvlp01.gemalto.com type=AVC msg=audit(1761288129.188:1557909): avc:  denied  { execute } for  pid=35602 comm=\"snmpd\" name=\"bind\" dev=\"dm-0\" ino=6293605 scontext=system_u:system_r:snmpd_t:s0 tcontext=unconfined_u:object_r:user_home_t:s0 tclass=file permissive=1"
+    "message": "node=dctdnsvlp01.gemalto.com type=AVC msg=audit(1761288129.188:1557909): avc:  denied  { execute } for  pid=35602 comm=\"snmpd\" name=\"bind\" dev=\"dm-0\" ino=6293605 scontext=system_u:system_r:snmpd_t:s0 tcontext=unconfined_u:object_r:user_home_t:s0 tclass=file permissive=1",
+    "id": "00000000-0000-0000-0000-000000000000",
+    "event": {
+      "dataset": "linux.auditd",
+      "kind": "event",
+      "module": "auditd",
+      "sequence": 1557909
+    },
+    "@timestamp": "2025-10-24T06:42:09.188000Z",
+    "file": {
+      "device": "dm-0",
+      "directory": "",
+      "name": "bind",
+      "path": "bind"
+    },
+    "host": {
+      "name": "dctdnsvlp01.gemalto.com",
+      "os": {
+        "type": "linux"
+      }
+    },
+    "linux": {
+      "audit": {
+        "type": "avc"
+      }
+    },
+    "process": {
+      "pid": 35602
+    }
   }
 }

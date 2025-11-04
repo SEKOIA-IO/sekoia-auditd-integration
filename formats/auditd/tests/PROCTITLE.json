@@ -9,6 +9,25 @@
     "message": "node=dctappvli179.gemalto.com type=PROCTITLE msg=audit(1761288690.710:170869): proctitle=\"/usr/sbin/chronyd\""
   },
   "expected": {
-    "message": "node=dctappvli179.gemalto.com type=PROCTITLE msg=audit(1761288690.710:170869): proctitle=\"/usr/sbin/chronyd\""
+    "message": "node=dctappvli179.gemalto.com type=PROCTITLE msg=audit(1761288690.710:170869): proctitle=\"/usr/sbin/chronyd\"",
+    "event": {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "dataset": "linux.auditd",
+      "kind": "event",
+      "module": "auditd",
+      "sequence": 170869
+    },
+    "@timestamp": "2025-10-24T06:51:30.710000Z",
+    "host": {
+      "name": "dctappvli179.gemalto.com",
+      "os": {
+        "type": "linux"
+      }
+    },
+    "linux": {
+      "audit": {
+        "type": "proctitle"
+      }
+    }
   }
 }
