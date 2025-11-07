@@ -7,8 +7,8 @@
   },
   "description": "Private App integration",
   "name": "Auditd Root",
-  "uuid": "7e7b1eb3-5740-4829-b076-58286b169060",
+  "uuid": "f19b72f2-edb0-41f8-ab78-94b8de2cc8df",
   "slug": "sekoia-auditd-integration",
-  "version": "0.1.1",
-  "categories": []
+  "version": "0.1.2",
+  "categories": ["Generic"]
 }
