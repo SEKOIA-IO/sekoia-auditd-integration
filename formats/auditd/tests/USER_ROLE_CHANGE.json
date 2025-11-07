@@ -1,0 +1,78 @@
+{
+  "input": {
+    "sekoiaio": {
+      "intake": {
+        "dialect": "Auditd",
+        "dialect_uuid": "1cdcdfeb-decc-4c3b-b969-b867c03118c7"
+      }
+    },
+    "message": "node=dctappvli179.gemalto.com type=USER_ROLE_CHANGE msg=audit(1761288105.681:170761): pid=232464 uid=0 auid=594206352 ses=5602 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='pam: default-context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 selected-context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 exe=\"/usr/sbin/sshd\" hostname=dct02per.gemalto.com addr=10.51.196.67 terminal=ssh res=success'"
+  },
+  "expected": {
+    "message": "node=dctappvli179.gemalto.com type=USER_ROLE_CHANGE msg=audit(1761288105.681:170761): pid=232464 uid=0 auid=594206352 ses=5602 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='pam: default-context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 selected-context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 exe=\"/usr/sbin/sshd\" hostname=dct02per.gemalto.com addr=10.51.196.67 terminal=ssh res=success'",
+    "event": {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "dataset": "linux.auditd",
+      "kind": "event",
+      "module": "auditd",
+      "sequence": 170761
+    },
+    "@timestamp": "2025-10-24T06:41:45.681000Z",
+    "host": {
+      "name": "dctappvli179.gemalto.com",
+      "os": {
+        "type": "linux"
+      }
+    },
+    "linux": {
+      "audit": {
+        "event": {
+          "outcome": "success"
+        },
+        "process": {
+          "selinux": {
+            "context": "system_u:system_r:sshd_t:s0-s0:c0.c1023"
+          }
+        },
+        "type": "user_role_change",
+        "user": {
+          "audit": {
+            "id": 594206352
+          },
+          "session": {
+            "id": 5602
+          }
+        }
+      }
+    },
+    "process": {
+      "executable": "/usr/sbin/sshd",
+      "pid": 232464
+    },
+    "related": {
+      "hosts": [
+        "dct02per.gemalto.com"
+      ],
+      "ip": [
+        "10.51.196.67"
+      ]
+    },
+    "service": {
+      "name": "ssh"
+    },
+    "source": {
+      "address": "dct02per.gemalto.com",
+      "domain": "dct02per.gemalto.com",
+      "ip": "10.51.196.67",
+      "registered_domain": "gemalto.com",
+      "subdomain": "dct02per",
+      "top_level_domain": "com"
+    },
+    "user": {
+      "effective": {
+        "id": "594206352"
+      },
+      "id": "0"
+    }
+  }
+}

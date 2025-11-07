@@ -1,0 +1,80 @@
+{
+  "input": {
+    "sekoiaio": {
+      "intake": {
+        "dialect": "Auditd",
+        "dialect_uuid": "1cdcdfeb-decc-4c3b-b969-b867c03118c7"
+      }
+    },
+    "message": "node=dctappvlp65.gemalto.com type=USER_ERR msg=audit(1761291465.002:312905): user pid=74705 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=PAM:bad_ident acct=\"?\" exe=\"/usr/sbin/sshd\" hostname=10.9.171.67 addr=10.9.171.67 terminal=ssh res=failed'"
+  },
+  "expected": {
+    "message": "node=dctappvlp65.gemalto.com type=USER_ERR msg=audit(1761291465.002:312905): user pid=74705 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=PAM:bad_ident acct=\"?\" exe=\"/usr/sbin/sshd\" hostname=10.9.171.67 addr=10.9.171.67 terminal=ssh res=failed'",
+    "event": {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "dataset": "linux.auditd",
+      "kind": "event",
+      "module": "auditd",
+      "sequence": 312905
+    },
+    "@timestamp": "2025-10-24T07:37:45.002000Z",
+    "host": {
+      "name": "dctappvlp65.gemalto.com",
+      "os": {
+        "type": "linux"
+      }
+    },
+    "linux": {
+      "audit": {
+        "event": {
+          "outcome": "failed"
+        },
+        "operation": "PAM:bad_ident",
+        "process": {
+          "selinux": {
+            "context": "system_u:system_r:sshd_t:s0-s0:c0.c1023"
+          }
+        },
+        "type": "user_err",
+        "user": {
+          "audit": {
+            "id": 4294967295
+          },
+          "session": {
+            "id": 4294967295
+          }
+        }
+      }
+    },
+    "process": {
+      "executable": "/usr/sbin/sshd",
+      "pid": 74705
+    },
+    "related": {
+      "hosts": [
+        "10.9.171.67"
+      ],
+      "ip": [
+        "10.9.171.67"
+      ],
+      "user": [
+        "?"
+      ]
+    },
+    "service": {
+      "name": "ssh"
+    },
+    "source": {
+      "address": "10.9.171.67",
+      "domain": "10.9.171.67",
+      "ip": "10.9.171.67"
+    },
+    "user": {
+      "effective": {
+        "id": "4294967295"
+      },
+      "id": "0",
+      "name": "?"
+    }
+  }
+}

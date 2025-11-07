@@ -1,0 +1,69 @@
+{
+  "input": {
+    "sekoiaio": {
+      "intake": {
+        "dialect": "Auditd",
+        "dialect_uuid": "1cdcdfeb-decc-4c3b-b969-b867c03118c7"
+      }
+    },
+    "message": "node=dctappvli127.gemalto.com type=USER_END msg=audit(1761288401.590:12163): user pid=111823 uid=0 auid=0 ses=1794 subj=system_u:system_r:crond_t:s0-s0:c0.c1023 msg='op=PAM:session_close acct=\"root\" exe=\"/usr/sbin/crond\" hostname=? addr=? terminal=cron res=success'"
+  },
+  "expected": {
+    "message": "node=dctappvli127.gemalto.com type=USER_END msg=audit(1761288401.590:12163): user pid=111823 uid=0 auid=0 ses=1794 subj=system_u:system_r:crond_t:s0-s0:c0.c1023 msg='op=PAM:session_close acct=\"root\" exe=\"/usr/sbin/crond\" hostname=? addr=? terminal=cron res=success'",
+    "event": {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "dataset": "linux.auditd",
+      "kind": "event",
+      "module": "auditd",
+      "sequence": 12163
+    },
+    "@timestamp": "2025-10-24T06:46:41.590000Z",
+    "host": {
+      "name": "dctappvli127.gemalto.com",
+      "os": {
+        "type": "linux"
+      }
+    },
+    "linux": {
+      "audit": {
+        "event": {
+          "outcome": "success"
+        },
+        "operation": "PAM:session_close",
+        "process": {
+          "selinux": {
+            "context": "system_u:system_r:crond_t:s0-s0:c0.c1023"
+          }
+        },
+        "type": "user_end",
+        "user": {
+          "audit": {
+            "id": 0
+          },
+          "session": {
+            "id": 1794
+          }
+        }
+      }
+    },
+    "process": {
+      "executable": "/usr/sbin/crond",
+      "pid": 111823
+    },
+    "related": {
+      "user": [
+        "root"
+      ]
+    },
+    "service": {
+      "name": "cron"
+    },
+    "user": {
+      "effective": {
+        "id": "0"
+      },
+      "id": "0",
+      "name": "root"
+    }
+  }
+}

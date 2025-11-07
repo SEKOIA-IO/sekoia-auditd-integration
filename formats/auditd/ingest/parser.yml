@@ -126,8 +126,8 @@ stages:
   set_linux_audit_fields:
     actions:
       - set:
-          linux.audit.user.session.id: "{{kv_parsed_main.message.ses}}"
-          linux.audit.user.audit.id: "{{kv_parsed_main.message.auid}}"
+          linux.audit.user.session.id: "{{kv_parsed_main.message.ses | int}}"
+          linux.audit.user.audit.id: "{{kv_parsed_main.message.auid | int}}"
           linux.audit.process.selinux.context: "{{kv_parsed_main.message.subj}}"
           linux.audit.data.item: "{{kv_parsed_main.message.item}}"
           linux.audit.file.rdev: "{{kv_parsed_main.message.rdev}}"

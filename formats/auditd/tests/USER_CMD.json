@@ -1,0 +1,53 @@
+{
+  "input": {
+    "sekoiaio": {
+      "intake": {
+        "dialect": "Auditd",
+        "dialect_uuid": "1cdcdfeb-decc-4c3b-b969-b867c03118c7"
+      }
+    },
+    "message": "node=xxxdc1irmbdd01u.usr.hza.infra.xxxx type=USER_CMD msg=audit(1761288178.347:347533): pid=54552 uid=0 auid=4294967295 ses=4294967295 msg='cwd=\"/\" cmd=646D696465636F6465202D2D737472696E6720636861737369732D74797065 terminal=? res=success'"
+  },
+  "expected": {
+    "message": "node=xxxdc1irmbdd01u.usr.hza.infra.xxxx type=USER_CMD msg=audit(1761288178.347:347533): pid=54552 uid=0 auid=4294967295 ses=4294967295 msg='cwd=\"/\" cmd=646D696465636F6465202D2D737472696E6720636861737369732D74797065 terminal=? res=success'",
+    "event": {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "dataset": "linux.auditd",
+      "kind": "event",
+      "module": "auditd",
+      "sequence": 347533
+    },
+    "@timestamp": "2025-10-24T06:42:58.347000Z",
+    "host": {
+      "name": "xxxdc1irmbdd01u.usr.hza.infra.xxxx",
+      "os": {
+        "type": "linux"
+      }
+    },
+    "linux": {
+      "audit": {
+        "event": {
+          "outcome": "success"
+        },
+        "type": "user_cmd",
+        "user": {
+          "audit": {
+            "id": 4294967295
+          },
+          "session": {
+            "id": 4294967295
+          }
+        }
+      }
+    },
+    "process": {
+      "pid": 54552
+    },
+    "user": {
+      "effective": {
+        "id": "4294967295"
+      },
+      "id": "0"
+    }
+  }
+}
