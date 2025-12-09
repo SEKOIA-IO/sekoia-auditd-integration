@@ -9,6 +9,6 @@
   "name": "Auditd Root",
   "uuid": "f19b72f2-edb0-41f8-ab78-94b8de2cc8df",
   "slug": "sekoia-auditd-integration",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "categories": ["Generic"]
 }
