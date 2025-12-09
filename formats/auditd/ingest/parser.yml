@@ -39,6 +39,16 @@ pipeline:
         value_sep: "="
         item_sep: \s
 
+  - name: extract_execve_args
+    filter: "{{parsed_event.message.audit_type | lower == 'execve'}}"
+    external:
+      name: grok.match
+      properties:
+        input_field: "{{parsed_event.message.audit_kv}}"
+        output_field: execve_data
+        pattern: 'argc=%{NUMBER:argc}%{GREEDYDATA:args_string}'
+
+  - name: parse_execve_command
   - name: set_event_common_fields
   - name: set_host_fields
   - name: set_user_fields
@@ -50,6 +60,42 @@ pipeline:
   - name: set_ecs_categorization
 
 stages:
+  parse_execve_command:
+    actions:
+      # Pour les événements EXECVE, extraire les arguments depuis args_string
+      - set:
+          process.args: >
+            {%- if extract_execve_args.execve_data.args_string is defined -%}
+              {%- set args_str = extract_execve_args.execve_data.args_string -%}
+              {%- set args = [] -%}
+              {%- set parts = args_str.split() -%}
+              {%- for part in parts -%}
+                {%- if '="' in part -%}
+                  {%- set value = part.split('="')[1].rstrip('"') -%}
+                  {%- set _ = args.append(value) -%}
+                {%- endif -%}
+              {%- endfor -%}
+              {{ args }}
+            {%- endif -%}
+        filter: "{{parsed_event.message.audit_type | lower == 'execve' and extract_execve_args.execve_data.args_string is defined}}"
+
+      # Construire la ligne de commande complète
+      - set:
+          process.command_line: >
+            {%- if extract_execve_args.execve_data.args_string is defined -%}
+              {%- set args_str = extract_execve_args.execve_data.args_string -%}
+              {%- set args = [] -%}
+              {%- set parts = args_str.split() -%}
+              {%- for part in parts -%}
+                {%- if '="' in part -%}
+                  {%- set value = part.split('="')[1].rstrip('"') -%}
+                  {%- set _ = args.append(value) -%}
+                {%- endif -%}
+              {%- endfor -%}
+              {{ args | join(' ') }}
+            {%- endif -%}
+        filter: "{{parsed_event.message.audit_type | lower == 'execve' and extract_execve_args.execve_data.args_string is defined}}"
+
   set_event_common_fields:
     actions:
       - set:
@@ -135,6 +181,7 @@ stages:
           linux.audit.operation: "{{kv_parsed_nested.message.op}}"
           linux.audit.type: "{{parsed_event.message.audit_type | lower}}"
           linux.audit.event.outcome: "{{kv_parsed_nested.message.res}}"
+          linux.audit.file.objtype: "{{kv_parsed_main.message.objtype}}"
 
       - set:
           service.name: "{{kv_parsed_nested.message.terminal}}"
@@ -153,8 +200,59 @@ stages:
           event.type: [start]
         filter: "{{parsed_event.message.audit_type | lower == 'crypto_session'}}"
 
-      # File events
+      # USER_AUTH events with outcome
+      - set:
+          event.category: [authentication]
+          event.type: [info]
+          event.outcome: success
+        filter: "{{parsed_event.message.audit_type | lower == 'user_auth' and kv_parsed_nested.message.res == 'success'}}"
+
+      - set:
+          event.category: [authentication]
+          event.type: [info]
+          event.outcome: failure
+        filter: "{{parsed_event.message.audit_type | lower == 'user_auth' and kv_parsed_nested.message.res == 'failed'}}"
+
+      # USER_LOGIN events with outcome
+      - set:
+          event.category: [authentication]
+          event.type: [start]
+          event.outcome: success
+        filter: "{{parsed_event.message.audit_type | lower == 'user_login' and kv_parsed_nested.message.res == 'success'}}"
+
+      - set:
+          event.category: [authentication]
+          event.type: [start]
+          event.outcome: failure
+        filter: "{{parsed_event.message.audit_type | lower == 'user_login' and kv_parsed_nested.message.res == 'failed'}}"
+
+      # USER_LOGOUT events with outcome
+      - set:
+          event.category: [authentication]
+          event.type: [end]
+          event.outcome: success
+        filter: "{{parsed_event.message.audit_type | lower == 'user_logout' and kv_parsed_nested.message.res == 'success'}}"
+
+      - set:
+          event.category: [authentication]
+          event.type: [end]
+          event.outcome: failure
+        filter: "{{parsed_event.message.audit_type | lower == 'user_logout' and kv_parsed_nested.message.res == 'failed'}}"
+
+      # File events - PATH with CREATE objtype
+      - set:
+          event.category: [file]
+          event.type: [creation]
+        filter: "{{parsed_event.message.audit_type | lower == 'path' and kv_parsed_main.message.objtype == 'CREATE'}}"
+
+      # File events - PATH with DELETE objtype
+      - set:
+          event.category: [file]
+          event.type: [deletion]
+        filter: "{{parsed_event.message.audit_type | lower == 'path' and kv_parsed_main.message.objtype == 'DELETE'}}"
+
+      # File events - PATH without specific objtype (default access)
       - set:
           event.category: [file]
           event.type: [access]
-        filter: "{{parsed_event.message.audit_type | lower == 'path'}}"
+        filter: "{{parsed_event.message.audit_type | lower == 'path' and kv_parsed_main.message.objtype not in ['CREATE', 'DELETE']}}"

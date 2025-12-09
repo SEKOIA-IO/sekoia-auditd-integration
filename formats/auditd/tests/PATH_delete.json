@@ -1,0 +1,60 @@
+{
+  "input": {
+    "sekoiaio": {
+      "intake": {
+        "dialect": "Auditd",
+        "dialect_uuid": "7e7b1eb3-5740-4829-b076-58286b169060"
+      }
+    },
+    "message": "node=host_01 type=PATH msg=audit(1761963905.096:240907): item=2 name=\"/var/log/btmp\" inode=8320 dev=fd:11 mode=0100600 ouid=0 ogid=22 rdev=00:00 objtype=DELETE cap_fp=0000000000000000 cap_fi=0000000000000000 cap_fe=0 cap_fver=0"
+  },
+  "expected": {
+    "message": "node=host_01 type=PATH msg=audit(1761963905.096:240907): item=2 name=\"/var/log/btmp\" inode=8320 dev=fd:11 mode=0100600 ouid=0 ogid=22 rdev=00:00 objtype=DELETE cap_fp=0000000000000000 cap_fi=0000000000000000 cap_fe=0 cap_fver=0",
+    "event": {
+      "category": [
+        "file"
+      ],
+      "dataset": "linux.auditd",
+      "kind": "event",
+      "module": "auditd",
+      "sequence": 240907,
+      "type": [
+        "deletion"
+      ]
+    },
+    "@timestamp": "2025-11-01T02:25:05.096000Z",
+    "file": {
+      "device": "fd:11",
+      "directory": "/var/log",
+      "group": "22",
+      "inode": "8320",
+      "mode": "0100600",
+      "name": "btmp",
+      "owner": "0",
+      "path": "/var/log/btmp"
+    },
+    "host": {
+      "name": "host_01",
+      "os": {
+        "type": "linux"
+      }
+    },
+    "linux": {
+      "audit": {
+        "data": {
+          "item": 2
+        },
+        "file": {
+          "objtype": "DELETE",
+          "rdev": "00:00"
+        },
+        "type": "path"
+      }
+    },
+    "related": {
+      "user": [
+        "0"
+      ]
+    }
+  }
+}

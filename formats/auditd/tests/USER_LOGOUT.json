@@ -11,11 +11,17 @@
   "expected": {
     "message": "node=dctappvli179.gemalto.com type=USER_LOGOUT msg=audit(1761288105.816:170771): pid=232464 uid=0 auid=594206352 ses=5602 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=login id=594206352 exe=\"/usr/sbin/sshd\" hostname=dct02per.gemalto.com addr=10.51.196.67 terminal=ssh res=success'",
     "event": {
-      "id": "00000000-0000-0000-0000-000000000000",
+      "category": [
+        "authentication"
+      ],
       "dataset": "linux.auditd",
       "kind": "event",
       "module": "auditd",
-      "sequence": 170771
+      "outcome": "success",
+      "sequence": 170771,
+      "type": [
+        "end"
+      ]
     },
     "@timestamp": "2025-10-24T06:41:45.816000Z",
     "host": {

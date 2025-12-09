@@ -13,6 +13,11 @@ linux.audit.event.outcome:
   name: linux.audit.event.outcome
   type: keyword
 
+linux.audit.file.objtype:
+  description: ''
+  name: linux.audit.file.objtype
+  type: keyword
+
 linux.audit.file.rdev:
   description: Special device id
   name: linux.audit.file.rdev

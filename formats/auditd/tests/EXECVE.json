@@ -1,0 +1,47 @@
+{
+  "input": {
+    "sekoiaio": {
+      "intake": {
+        "dialect": "Auditd",
+        "dialect_uuid": "1cdcdfeb-decc-4c3b-b969-b867c03118c7"
+      }
+    },
+    "message": "node=dctmuthlp53 type=EXECVE msg=audit(1756988537.976:1190395): argc=10 a0=\"/usr/bin/nutanix_privileged_cmd\" a1=\"/bin/find\" a2=\"/var/log\" a3=\"-name\" a4=\"mcelog\" a5=\"-newermt\" a6=\"2025-09-04\" a7=\"-not\" a8=\"-newermt\" a9=\"2025-09-05\""
+  },
+  "expected": {
+    "message": "node=dctmuthlp53 type=EXECVE msg=audit(1756988537.976:1190395): argc=10 a0=\"/usr/bin/nutanix_privileged_cmd\" a1=\"/bin/find\" a2=\"/var/log\" a3=\"-name\" a4=\"mcelog\" a5=\"-newermt\" a6=\"2025-09-04\" a7=\"-not\" a8=\"-newermt\" a9=\"2025-09-05\"",
+    "event": {
+      "dataset": "linux.auditd",
+      "kind": "event",
+      "module": "auditd",
+      "sequence": 1190395
+    },
+    "@timestamp": "2025-09-04T12:22:17.976000Z",
+    "host": {
+      "name": "dctmuthlp53",
+      "os": {
+        "type": "linux"
+      }
+    },
+    "linux": {
+      "audit": {
+        "type": "execve"
+      }
+    },
+    "process": {
+      "args": [
+        "-name",
+        "-newermt",
+        "-newermt",
+        "-not",
+        "/bin/find",
+        "/usr/bin/nutanix_privileged_cmd",
+        "/var/log",
+        "2025-09-04",
+        "2025-09-05",
+        "mcelog"
+      ],
+      "command_line": "/usr/bin/nutanix_privileged_cmd /bin/find /var/log -name mcelog -newermt 2025-09-04 -not -newermt 2025-09-05"
+    }
+  }
+}

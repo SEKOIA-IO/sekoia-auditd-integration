@@ -11,11 +11,17 @@
   "expected": {
     "message": "node=dctappvli179.gemalto.com type=USER_AUTH msg=audit(1761288105.529:170754): pid=232464 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:sshd_t:s0-s0:c0.c1023 msg='op=pubkey_auth rport=49778 acct=\"GEMALTO\\dctsftptransfer\" exe=\"/usr/sbin/sshd\" hostname=? addr=10.51.196.67 terminal=? res=success'",
     "event": {
-      "id": "00000000-0000-0000-0000-000000000000",
+      "category": [
+        "authentication"
+      ],
       "dataset": "linux.auditd",
       "kind": "event",
       "module": "auditd",
-      "sequence": 170754
+      "outcome": "success",
+      "sequence": 170754,
+      "type": [
+        "info"
+      ]
     },
     "@timestamp": "2025-10-24T06:41:45.529000Z",
     "host": {
